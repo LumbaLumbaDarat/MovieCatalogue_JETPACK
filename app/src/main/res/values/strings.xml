@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Movie Catalogue</string>
+
+    <string name="version_apps">Versi %s</string>
+
+    <string name="tab_movies">Movies</string>
+    <string name="tab_tv_shows">Tv Shows</string>
+
+    <string-array name="month">
+        <item>0|Januari</item>
+        <item>1|Februari</item>
+        <item>2|Maret</item>
+        <item>3|April</item>
+        <item>4|Mei</item>
+        <item>5|Juni</item>
+        <item>6|Juli</item>
+        <item>7|Agustus</item>
+        <item>8|September</item>
+        <item>9|Oktober</item>
+        <item>10|November</item>
+        <item>11|Desember</item>
+    </string-array>
+
+    <string name="release_date_title">Released Date</string>
+    <string name="release_date_tiv_show_title">Air Date</string>
+    <string name="release_date_value">%s %s %s</string>
+
+    <string name="runtime_title">Film Duration</string>
+    <string name="runtime_tv_show_title">Episodes</string>
+    <string name="runtime_value">%s %s</string>
+
+    <string name="user_score">Film Score %s</string>
+
+    <string name="user_score_title">Film Score</string>
+    <string name="user_score_detail">%s</string>
+
+    <string name="genre_title">Genre</string>
+    <string name="status_title">Status</string>
+    <string name="overview_title">Overview</string>
+
+    <string name="title">title</string>
+
+    <string name="runtime_unit_minute">Minute</string>
+    <string name="runtime_unit_episode">Episodes</string>
+
+    <string name="menu_link">Link</string>
+    <string name="menu_share">Share</string>
+
+    <string name="error_message_something_wrong">Sorry… Something Wrong !</string>
+</resources>
