@@ -1,9 +1,7 @@
 package com.arifrizkihidayat.moviecatalogue;
 
 import android.content.Context;
-import android.util.Log;
 
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -22,16 +20,14 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.arifrizkihidayat.moviecatalogue.utils.UtilizationClass.getGenres;
 import static com.arifrizkihidayat.moviecatalogue.utils.UtilizationClass.getMovieRuntime;
 import static com.arifrizkihidayat.moviecatalogue.utils.UtilizationClass.getReleaseDate;
-import static org.hamcrest.Matchers.allOf;
 
 public class ExampleInstrumentedTest {
 
