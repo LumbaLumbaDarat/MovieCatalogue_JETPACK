@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -53,9 +55,14 @@ public class MovieDetailEntity {
     @Getter @Setter
     private String moviePoster;
 
+    @ColumnInfo(name = "isFavorite")
+    @Getter @Setter
+    private boolean isFavorite;
+
     public MovieDetailEntity() {
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "MovieDetailEntity{" +
@@ -69,6 +76,7 @@ public class MovieDetailEntity {
                 ", movieHomePage='" + movieHomePage + '\'' +
                 ", movieUserScore=" + movieUserScore +
                 ", moviePoster='" + moviePoster + '\'' +
+                ", isFavorite=" + isFavorite +
                 '}';
     }
 }

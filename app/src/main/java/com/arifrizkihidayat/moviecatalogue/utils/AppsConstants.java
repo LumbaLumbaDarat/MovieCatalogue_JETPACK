@@ -22,5 +22,6 @@ public class AppsConstants {
 
     public static final String EMPTY_STRING = "";
 
-    public static final String ARRAY_POSITION = "ARRAY_POSITION";
+    public static final int IS_FAVORITE    = 1;
+    public static final int ISN_T_FAVORITE = 0;
 }

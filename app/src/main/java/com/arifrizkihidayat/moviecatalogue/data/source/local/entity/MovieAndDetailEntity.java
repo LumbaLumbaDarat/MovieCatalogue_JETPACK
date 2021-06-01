@@ -3,10 +3,13 @@ package com.arifrizkihidayat.moviecatalogue.data.source.local.entity;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
 public class MovieAndDetailEntity {
+
     @Embedded
     @Getter @Setter
     public MovieEntity movieEntity;
@@ -21,6 +24,7 @@ public class MovieAndDetailEntity {
     public MovieAndDetailEntity() {
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "MovieAndDetailEntity{" +

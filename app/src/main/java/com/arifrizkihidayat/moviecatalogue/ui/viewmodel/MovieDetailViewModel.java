@@ -22,4 +22,8 @@ public class MovieDetailViewModel extends ViewModel {
     public LiveData<Resource<MovieAndDetailEntity>> getTvShowDetail(int movieId) {
         return movieCatalogueRepository.getTvShowDetailCatalogue(movieId);
     }
+
+    public void setFavoriteMovie(int movieId, boolean isFavorite) {
+        movieCatalogueRepository.setFavoriteMovie(movieId, isFavorite);
+    }
 }

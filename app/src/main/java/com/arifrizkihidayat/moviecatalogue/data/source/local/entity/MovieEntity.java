@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -40,6 +42,7 @@ public class MovieEntity {
     public MovieEntity() {
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "MovieEntity{" +

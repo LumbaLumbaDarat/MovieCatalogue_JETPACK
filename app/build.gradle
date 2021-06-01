@@ -78,4 +78,8 @@ dependencies {
     //Room dependencies
     implementation 'androidx.room:room-runtime:2.3.0'
     annotationProcessor 'androidx.room:room-compiler:2.3.0'
+
+    //Paging dependencies
+    implementation 'androidx.paging:paging-runtime:3.0.0'
+    implementation 'androidx.paging:paging-rxjava3:3.0.0'
 }

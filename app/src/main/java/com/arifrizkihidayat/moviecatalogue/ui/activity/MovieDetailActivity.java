@@ -37,11 +37,13 @@ import static com.arifrizkihidayat.moviecatalogue.utils.UtilizationClass.getRele
 public class MovieDetailActivity extends AppCompatActivity {
 
     private ActivityMovieDetailBinding binding;
+    private MovieDetailViewModel movieDetailViewModel;
 
     private int movieId = 0;
     private String movieType = EMPTY_STRING;
 
     private MovieDetailEntity movieDetailEntity;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +60,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         }
 
         ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(this);
-        MovieDetailViewModel movieDetailViewModel =
-                new ViewModelProvider(this, viewModelFactory).
+        movieDetailViewModel = new ViewModelProvider(this, viewModelFactory).
                         get(MovieDetailViewModel.class);
 
         if (movieId != 0) {
@@ -130,9 +131,21 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.movie_detail_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuFavorite = menu.findItem(R.id.favorite);
+        if (movieDetailEntity != null) {
+            if (movieDetailEntity.isFavorite())
+                menuFavorite.setIcon(R.drawable.ic_round_favorite_24);
+            else menuFavorite.setIcon(R.drawable.ic_round_favorite_border_24);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -141,16 +154,19 @@ public class MovieDetailActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
-            case R.id.share:
-                if (movieDetailEntity != null)
-                    shareUrl(movieDetailEntity);
-                else Toast.makeText(this, getResources().
-                                getString(R.string.error_message_something_wrong),
-                        Toast.LENGTH_SHORT).show();
+            case R.id.favorite:
+                favoriteMovie();
                 break;
             case R.id.url:
                 if (movieDetailEntity != null)
                     openLink(movieDetailEntity);
+                else Toast.makeText(this, getResources().
+                                getString(R.string.error_message_something_wrong),
+                        Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.share:
+                if (movieDetailEntity != null)
+                    shareUrl(movieDetailEntity);
                 else Toast.makeText(this, getResources().
                                 getString(R.string.error_message_something_wrong),
                         Toast.LENGTH_SHORT).show();
@@ -197,11 +213,16 @@ public class MovieDetailActivity extends AppCompatActivity {
                 movieDetailEntity.getMovieReleaseDate()));
     }
 
-    private void openLink(MovieDetailEntity movieDetailEntity) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(movieDetailEntity.getMovieHomePage()));
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void favoriteMovie() {
+        movieDetailViewModel.setFavoriteMovie(
+                movieDetailEntity.getMovieId(), !movieDetailEntity.isFavorite());
 
-        startActivity(intent);
+        if (movieDetailEntity.isFavorite())
+            menu.getItem(0).setIcon(getResources().
+                    getDrawable(R.drawable.ic_round_favorite_border_24, null));
+        else menu.getItem(0).setIcon(getResources().
+                getDrawable(R.drawable.ic_round_favorite_24, null));
     }
 
     private void shareUrl(MovieDetailEntity movieDetailEntity) {
@@ -210,6 +231,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.app_name));
         intent.putExtra(Intent.EXTRA_TEXT, movieDetailEntity.getMovieHomePage());
 
-        startActivity(Intent.createChooser(intent, "Bagikan melalui"));
+        startActivity(Intent.createChooser(intent,
+                getResources().getString(R.string.message_share)));
+    }
+
+    private void openLink(MovieDetailEntity movieDetailEntity) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(movieDetailEntity.getMovieHomePage()));
+
+        startActivity(intent);
     }
 }

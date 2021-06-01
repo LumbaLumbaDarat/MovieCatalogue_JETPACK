@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 import com.arifrizkihidayat.moviecatalogue.data.source.local.entity.MovieAndDetailEntity;
 import com.arifrizkihidayat.moviecatalogue.data.source.local.entity.MovieDetailEntity;
@@ -29,4 +30,8 @@ public interface MovieCatalogueDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertMovieDetail(MovieDetailEntity movieDetailEntity);
+
+    @Transaction
+    @Query("UPDATE moviesDetailCatalogues SET isFavorite = :isFavorite WHERE movieId = :movieId")
+    void setFavoriteMovie(int movieId, boolean isFavorite);
 }

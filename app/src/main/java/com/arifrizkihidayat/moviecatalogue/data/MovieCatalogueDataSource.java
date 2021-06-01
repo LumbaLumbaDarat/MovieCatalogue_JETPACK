@@ -13,4 +13,5 @@ public interface MovieCatalogueDataSource {
     LiveData<Resource<MovieAndDetailEntity>> getMovieDetailCatalogue(int movieId);
     LiveData<Resource<List<MovieEntity>>> getTvShowsCatalogue();
     LiveData<Resource<MovieAndDetailEntity>> getTvShowDetailCatalogue(int movieId);
+    void setFavoriteMovie(int movieId, boolean isFavorite);
 }

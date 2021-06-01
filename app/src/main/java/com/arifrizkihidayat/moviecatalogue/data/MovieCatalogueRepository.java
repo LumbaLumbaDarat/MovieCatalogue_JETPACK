@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.ISN_T_FAVORITE;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_MOVIES;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_TV_SHOW;
 
@@ -130,6 +131,7 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                 movieDetailEntity.setMovieHomePage(data.getHomepage());
                 movieDetailEntity.setMovieUserScore(data.getVoteAverage());
                 movieDetailEntity.setMoviePoster(data.getPosterPath());
+                movieDetailEntity.setFavorite(false);
 
                 movieCatalogueLocalDataSource.insertMovieDetail(movieDetailEntity);
             }
@@ -211,9 +213,16 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                 movieDetailEntity.setMovieHomePage(data.getHomepage());
                 movieDetailEntity.setMovieUserScore(data.getVoteAverage());
                 movieDetailEntity.setMoviePoster(data.getPosterPath());
+                movieDetailEntity.setFavorite(false);
 
                 movieCatalogueLocalDataSource.insertMovieDetail(movieDetailEntity);
             }
         }.asLiveData();
+    }
+
+    @Override
+    public void setFavoriteMovie(int movieId, boolean isFavorite) {
+        appsExecutors.diskIO().execute(() -> movieCatalogueLocalDataSource.
+                setFavoriteMovie(movieId, isFavorite));
     }
 }

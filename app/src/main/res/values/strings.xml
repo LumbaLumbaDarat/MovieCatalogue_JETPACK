@@ -43,8 +43,11 @@
     <string name="runtime_unit_minute">Minute</string>
     <string name="runtime_unit_episode">Episodes</string>
 
+    <string name="menu_favorite">Favorite</string>
     <string name="menu_link">Link</string>
     <string name="menu_share">Share</string>
 
-    <string name="error_message_something_wrong">Sorry… Something Wrong !</string>
+    <string name="message_share">Bagikan melalui</string>
+
+    <string name="error_message_something_wrong">Sorryï¿½ Something Wrong !</string>
 </resources>

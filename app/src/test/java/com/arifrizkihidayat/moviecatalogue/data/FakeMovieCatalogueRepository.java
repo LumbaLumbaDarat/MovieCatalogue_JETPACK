@@ -200,4 +200,9 @@ public class FakeMovieCatalogueRepository implements MovieCatalogueDataSource {
             }
         }.asLiveData();
     }
+
+    @Override
+    public void setFavoriteMovie(int movieId, boolean isFavorite) {
+
+    }
 }

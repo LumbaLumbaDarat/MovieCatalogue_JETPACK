@@ -40,4 +40,8 @@ public class MovieCatalogueLocalDataSource {
     public void insertMovieDetail(MovieDetailEntity movieDetailEntity) {
         movieCatalogueDao.insertMovieDetail(movieDetailEntity);
     }
+
+    public void setFavoriteMovie(int movieId, boolean isFavorite) {
+        movieCatalogueDao.setFavoriteMovie(movieId, isFavorite);
+    }
 }
