@@ -22,8 +22,10 @@ import com.arifrizkihidayat.moviecatalogue.databinding.ActivityMovieDetailBindin
 import com.arifrizkihidayat.moviecatalogue.ui.viewmodel.MovieDetailViewModel;
 import com.arifrizkihidayat.moviecatalogue.ui.viewmodel.factory.ViewModelFactory;
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.EMPTY_STRING;
+import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FAVORITE;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_MOVIES;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_TV_SHOW;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.MOVIES_MODEL;
@@ -41,6 +43,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private int movieId = 0;
     private String movieType = EMPTY_STRING;
+    private boolean isFavorite = false;
 
     private MovieDetailEntity movieDetailEntity;
     private Menu menu;
@@ -57,6 +60,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (getIntent() != null) {
             movieId = getIntent().getIntExtra(MOVIES_MODEL, 0);
             movieType = getIntent().getStringExtra(MOVIE_TYPE);
+            isFavorite = getIntent().getBooleanExtra(IS_FAVORITE, false);
         }
 
         ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(this);
@@ -141,7 +145,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem menuFavorite = menu.findItem(R.id.favorite);
         if (movieDetailEntity != null) {
-            if (movieDetailEntity.isFavorite())
+            if (isFavorite)
                 menuFavorite.setIcon(R.drawable.ic_round_favorite_24);
             else menuFavorite.setIcon(R.drawable.ic_round_favorite_border_24);
         }
@@ -215,14 +219,25 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void favoriteMovie() {
-        movieDetailViewModel.setFavoriteMovie(
-                movieDetailEntity.getMovieId(), !movieDetailEntity.isFavorite());
+        movieDetailViewModel.setFavoriteMovie(movieId, !isFavorite);
 
-        if (movieDetailEntity.isFavorite())
+        Snackbar snackbar;
+        if (isFavorite) {
             menu.getItem(0).setIcon(getResources().
                     getDrawable(R.drawable.ic_round_favorite_border_24, null));
-        else menu.getItem(0).setIcon(getResources().
-                getDrawable(R.drawable.ic_round_favorite_24, null));
+            snackbar = Snackbar.make(binding.getRoot(), getResources().
+                    getString(R.string.message_success_remove_favorite), Snackbar.LENGTH_SHORT);
+
+        } else {
+            menu.getItem(0).setIcon(getResources().
+                    getDrawable(R.drawable.ic_round_favorite_24, null));
+            snackbar = Snackbar.make(binding.getRoot(), getResources().
+                    getString(R.string.message_success_add_favorite), Snackbar.LENGTH_SHORT);
+        }
+
+        snackbar.setAction(getResources().getString(R.string.label_ok),
+                v -> snackbar.dismiss());
+        snackbar.show();
     }
 
     private void shareUrl(MovieDetailEntity movieDetailEntity) {

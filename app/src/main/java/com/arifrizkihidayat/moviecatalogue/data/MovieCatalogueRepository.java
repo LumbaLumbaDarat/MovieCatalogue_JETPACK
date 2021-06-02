@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.ISN_T_FAVORITE;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_MOVIES;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_TV_SHOW;
 
@@ -86,6 +85,7 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                     movieEntity.setMovieOverview(movieInListResponse.getOverview());
                     movieEntity.setMovieUserScore(movieInListResponse.getVoteAverage());
                     movieEntity.setMoviePoster(movieInListResponse.getPosterPath());
+                    movieEntity.setFavorite(false);
 
                     movieEntityArrayList.add(movieEntity);
                 }
@@ -131,7 +131,6 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                 movieDetailEntity.setMovieHomePage(data.getHomepage());
                 movieDetailEntity.setMovieUserScore(data.getVoteAverage());
                 movieDetailEntity.setMoviePoster(data.getPosterPath());
-                movieDetailEntity.setFavorite(false);
 
                 movieCatalogueLocalDataSource.insertMovieDetail(movieDetailEntity);
             }
@@ -168,6 +167,7 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                     movieEntity.setMovieOverview(tvShowsInListResponse.getOverview());
                     movieEntity.setMovieUserScore(tvShowsInListResponse.getVoteAverage());
                     movieEntity.setMoviePoster(tvShowsInListResponse.getPosterPath());
+                    movieEntity.setFavorite(false);
 
                     movieEntityArrayList.add(movieEntity);
                 }
@@ -213,7 +213,6 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                 movieDetailEntity.setMovieHomePage(data.getHomepage());
                 movieDetailEntity.setMovieUserScore(data.getVoteAverage());
                 movieDetailEntity.setMoviePoster(data.getPosterPath());
-                movieDetailEntity.setFavorite(false);
 
                 movieCatalogueLocalDataSource.insertMovieDetail(movieDetailEntity);
             }

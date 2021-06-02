@@ -6,6 +6,8 @@
     <string name="tab_movies">Movies</string>
     <string name="tab_tv_shows">Tv Shows</string>
 
+    <string name="label_favorite_app_bar">Favorite</string>
+
     <string-array name="month">
         <item>0|Januari</item>
         <item>1|Februari</item>
@@ -47,7 +49,12 @@
     <string name="menu_link">Link</string>
     <string name="menu_share">Share</string>
 
-    <string name="message_share">Bagikan melalui</string>
+    <string name="message_share">Share via</string>
 
     <string name="error_message_something_wrong">Sorry� Something Wrong !</string>
+
+    <string name="message_success_add_favorite">Successfully added to favorite list</string>
+    <string name="message_success_remove_favorite">Successfully removed from favorite list</string>
+
+    <string name="label_ok">Ok</string>
 </resources>

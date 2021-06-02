@@ -22,6 +22,7 @@ public class AppsConstants {
 
     public static final String EMPTY_STRING = "";
 
-    public static final int IS_FAVORITE    = 1;
-    public static final int ISN_T_FAVORITE = 0;
+    public static final String FAVORITE_PAGE  = "FAVORITE_PAGE";
+    public static final String IS_FAVORITE    = "IS_FAVORITE";
+    public static final String ISN_T_FAVORITE = "ISN_T_FAVORITE";
 }

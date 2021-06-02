@@ -55,10 +55,6 @@ public class MovieDetailEntity {
     @Getter @Setter
     private String moviePoster;
 
-    @ColumnInfo(name = "isFavorite")
-    @Getter @Setter
-    private boolean isFavorite;
-
     public MovieDetailEntity() {
     }
 
@@ -76,7 +72,6 @@ public class MovieDetailEntity {
                 ", movieHomePage='" + movieHomePage + '\'' +
                 ", movieUserScore=" + movieUserScore +
                 ", moviePoster='" + moviePoster + '\'' +
-                ", isFavorite=" + isFavorite +
                 '}';
     }
 }

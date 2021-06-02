@@ -24,6 +24,7 @@ import com.arifrizkihidayat.moviecatalogue.ui.viewmodel.factory.ViewModelFactory
 
 import java.util.ArrayList;
 
+import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FAVORITE;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_MOVIES;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.MOVIES_MODEL;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.MOVIE_TYPE;
@@ -99,6 +100,7 @@ public class MoviesCatalogueFragment extends Fragment {
             intent = new Intent(getActivity(), MovieDetailActivity.class);
             intent.putExtra(MOVIES_MODEL, movieEntity.getMovieId());
             intent.putExtra(MOVIE_TYPE, movieEntity.getMovieType());
+            intent.putExtra(IS_FAVORITE, movieEntity.isFavorite());
             startActivity(intent);
         });
 

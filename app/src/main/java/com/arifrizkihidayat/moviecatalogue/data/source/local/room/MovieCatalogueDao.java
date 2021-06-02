@@ -32,6 +32,6 @@ public interface MovieCatalogueDao {
     void insertMovieDetail(MovieDetailEntity movieDetailEntity);
 
     @Transaction
-    @Query("UPDATE moviesDetailCatalogues SET isFavorite = :isFavorite WHERE movieId = :movieId")
+    @Query("UPDATE moviesCatalogues SET isFavorite = :isFavorite WHERE movieId = :movieId")
     void setFavoriteMovie(int movieId, boolean isFavorite);
 }
