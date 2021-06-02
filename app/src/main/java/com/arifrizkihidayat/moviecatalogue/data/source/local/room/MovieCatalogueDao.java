@@ -1,6 +1,7 @@
 package com.arifrizkihidayat.moviecatalogue.data.source.local.room;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -19,11 +20,11 @@ public interface MovieCatalogueDao {
 
     @Transaction
     @Query("SELECT * FROM moviesCatalogues WHERE movieType = :movieType")
-    LiveData<List<MovieEntity>> getMoviesCatalogues(String movieType);
+    DataSource.Factory<Integer, MovieEntity> getMoviesCatalogues(String movieType);
 
     @Transaction
     @Query("SELECT * FROM moviesCatalogues WHERE movieType = :movieType AND isFavorite = :isFavorite")
-    LiveData<List<MovieEntity>> getFavoriteMoviesCatalogues(String movieType, boolean isFavorite);
+    DataSource.Factory<Integer, MovieEntity> getFavoriteMoviesCatalogues(String movieType, boolean isFavorite);
 
     @Transaction
     @Query("SELECT * FROM moviesCatalogues WHERE movieId = :movieId")

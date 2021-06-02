@@ -143,9 +143,7 @@ public class MoviesCatalogueFragment extends Fragment {
                                     binding.pbMoviesCatalogue.setVisibility(View.VISIBLE);
                                     break;
                                 case SUCCESS:
-                                    moviesCatalogueAdapter.
-                                            setMovieEntityArrayList(new ArrayList<>(listResource.data));
-                                    moviesCatalogueAdapter.notifyDataSetChanged();
+                                    moviesCatalogueAdapter.submitList(listResource.data);
                                     binding.pbMoviesCatalogue.setVisibility(View.GONE);
                                     break;
                                 case ERROR:
@@ -175,9 +173,7 @@ public class MoviesCatalogueFragment extends Fragment {
                                     binding.pbMoviesCatalogue.setVisibility(View.VISIBLE);
                                     break;
                                 case SUCCESS:
-                                    moviesCatalogueAdapter.
-                                            setMovieEntityArrayList(new ArrayList<>(listResource.data));
-                                    moviesCatalogueAdapter.notifyDataSetChanged();
+                                    moviesCatalogueAdapter.submitList(listResource.data);
                                     binding.pbMoviesCatalogue.setVisibility(View.GONE);
                                     break;
                                 case ERROR:
@@ -206,12 +202,12 @@ public class MoviesCatalogueFragment extends Fragment {
             moviesCatalogueViewModel.getFavoriteMoviesCatalogue().
                     observe(getViewLifecycleOwner(), movieEntities ->
             {
+                Log.e("TAG", "loadFavoriteMoviesCatalogues: ".concat(movieEntities.toString()).concat("-").concat(String.valueOf(movieEntities.size())));
                 if (movieEntities.size() == 0)
                     notifyNoFavoriteMovie();
 
                 binding.pbMoviesCatalogue.setVisibility(View.GONE);
-                moviesCatalogueAdapter.
-                        setMovieEntityArrayList(new ArrayList<>(movieEntities));
+                moviesCatalogueAdapter.submitList(movieEntities);
                 moviesCatalogueAdapter.notifyDataSetChanged();
             });
         } else {
@@ -223,8 +219,7 @@ public class MoviesCatalogueFragment extends Fragment {
                             notifyNoFavoriteMovie();
 
                         binding.pbMoviesCatalogue.setVisibility(View.GONE);
-                        moviesCatalogueAdapter.
-                                setMovieEntityArrayList(new ArrayList<>(movieEntities));
+                        moviesCatalogueAdapter.submitList(movieEntities);
                         moviesCatalogueAdapter.notifyDataSetChanged();
                     });
         }

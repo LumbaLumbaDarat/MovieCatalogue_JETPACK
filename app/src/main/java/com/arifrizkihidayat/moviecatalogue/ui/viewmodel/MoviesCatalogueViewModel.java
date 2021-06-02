@@ -2,6 +2,7 @@ package com.arifrizkihidayat.moviecatalogue.ui.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.paging.PagedList;
 
 import com.arifrizkihidayat.moviecatalogue.data.MovieCatalogueRepository;
 import com.arifrizkihidayat.moviecatalogue.data.source.local.entity.MovieEntity;
@@ -17,19 +18,19 @@ public class MoviesCatalogueViewModel extends ViewModel {
         this.movieCatalogueRepository = movieCatalogueRepository;
     }
 
-    public LiveData<Resource<List<MovieEntity>>> getMoviesCatalogue() {
+    public LiveData<Resource<PagedList<MovieEntity>>> getMoviesCatalogue() {
         return movieCatalogueRepository.getMoviesCatalogue();
     }
 
-    public LiveData<List<MovieEntity>> getFavoriteMoviesCatalogue() {
+    public LiveData<PagedList<MovieEntity>> getFavoriteMoviesCatalogue() {
         return movieCatalogueRepository.getFavoriteMoviesCatalogue();
     }
 
-    public LiveData<Resource<List<MovieEntity>>> getTvShowsCatalogue() {
+    public LiveData<Resource<PagedList<MovieEntity>>> getTvShowsCatalogue() {
         return movieCatalogueRepository.getTvShowsCatalogue();
     }
 
-    public LiveData<List<MovieEntity>> getFavoriteTvShowsCatalogue() {
+    public LiveData<PagedList<MovieEntity>> getFavoriteTvShowsCatalogue() {
         return movieCatalogueRepository.getFavoriteTvShowsCatalogue();
     }
 }

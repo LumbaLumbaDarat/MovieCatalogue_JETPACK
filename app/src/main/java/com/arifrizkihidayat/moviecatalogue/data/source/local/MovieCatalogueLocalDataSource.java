@@ -1,6 +1,7 @@
 package com.arifrizkihidayat.moviecatalogue.data.source.local;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 
 import com.arifrizkihidayat.moviecatalogue.data.source.local.entity.MovieAndDetailEntity;
 import com.arifrizkihidayat.moviecatalogue.data.source.local.entity.MovieDetailEntity;
@@ -25,11 +26,11 @@ public class MovieCatalogueLocalDataSource {
         return INSTANCE;
     }
 
-    public LiveData<List<MovieEntity>> getMoviesCatalogues(String movieType) {
+    public DataSource.Factory<Integer, MovieEntity> getMoviesCatalogues(String movieType) {
         return movieCatalogueDao.getMoviesCatalogues(movieType);
     }
 
-    public LiveData<List<MovieEntity>> getFavoriteMoviesCatalogues(String movieType) {
+    public DataSource.Factory<Integer, MovieEntity> getFavoriteMoviesCatalogues(String movieType) {
         return movieCatalogueDao.getFavoriteMoviesCatalogues(movieType, true);
     }
 
