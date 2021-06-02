@@ -23,6 +23,7 @@ import com.arifrizkihidayat.moviecatalogue.ui.activity.MovieDetailActivity;
 import com.arifrizkihidayat.moviecatalogue.ui.adapter.MoviesCatalogueAdapter;
 import com.arifrizkihidayat.moviecatalogue.ui.viewmodel.MoviesCatalogueViewModel;
 import com.arifrizkihidayat.moviecatalogue.ui.viewmodel.factory.ViewModelFactory;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -205,6 +206,9 @@ public class MoviesCatalogueFragment extends Fragment {
             moviesCatalogueViewModel.getFavoriteMoviesCatalogue().
                     observe(getViewLifecycleOwner(), movieEntities ->
             {
+                if (movieEntities.size() == 0)
+                    notifyNoFavoriteMovie();
+
                 binding.pbMoviesCatalogue.setVisibility(View.GONE);
                 moviesCatalogueAdapter.
                         setMovieEntityArrayList(new ArrayList<>(movieEntities));
@@ -215,11 +219,23 @@ public class MoviesCatalogueFragment extends Fragment {
             moviesCatalogueViewModel.getFavoriteTvShowsCatalogue().
                     observe(getViewLifecycleOwner(), movieEntities ->
                     {
+                        if (movieEntities.size() == 0)
+                            notifyNoFavoriteMovie();
+
                         binding.pbMoviesCatalogue.setVisibility(View.GONE);
                         moviesCatalogueAdapter.
                                 setMovieEntityArrayList(new ArrayList<>(movieEntities));
                         moviesCatalogueAdapter.notifyDataSetChanged();
                     });
         }
+    }
+
+    private void notifyNoFavoriteMovie() {
+        Snackbar snackbar = Snackbar.make(binding.getRoot(),
+                getResources().getString(R.string.message_no_movie_favorite),
+                Snackbar.LENGTH_SHORT);
+        snackbar.setAction(getResources().getString(R.string.label_ok),
+                v -> snackbar.dismiss());
+        snackbar.show();
     }
 }

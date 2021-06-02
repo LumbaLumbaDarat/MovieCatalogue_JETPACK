@@ -225,14 +225,15 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (isFavorite) {
             menu.getItem(0).setIcon(getResources().
                     getDrawable(R.drawable.ic_round_favorite_border_24, null));
-            snackbar = Snackbar.make(binding.getRoot(), getResources().
-                    getString(R.string.message_success_remove_favorite), Snackbar.LENGTH_SHORT);
-
+            snackbar = Snackbar.make(binding.getRoot(),
+                    getResources().getString(R.string.message_success_remove_favorite),
+                    Snackbar.LENGTH_SHORT);
         } else {
             menu.getItem(0).setIcon(getResources().
                     getDrawable(R.drawable.ic_round_favorite_24, null));
-            snackbar = Snackbar.make(binding.getRoot(), getResources().
-                    getString(R.string.message_success_add_favorite), Snackbar.LENGTH_SHORT);
+            snackbar = Snackbar.make(binding.getRoot(),
+                    getResources().getString(R.string.message_success_add_favorite),
+                    Snackbar.LENGTH_SHORT);
         }
 
         snackbar.setAction(getResources().getString(R.string.label_ok),

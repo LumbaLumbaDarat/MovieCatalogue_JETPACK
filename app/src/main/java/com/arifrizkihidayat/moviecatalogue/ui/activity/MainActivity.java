@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -59,6 +61,19 @@ public class MainActivity extends AppCompatActivity {
 
         new TabLayoutMediator(binding.tlMain, binding.vpMain,
                 (tab, position) -> tab.setText(FRAGMENT_PAGE_TITLE[position])).attach();
+
+        for(int i = 0; i < binding.tlMain.getTabCount(); i++) {
+            View tab = ((ViewGroup) binding.tlMain.getChildAt(0)).getChildAt(i);
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) tab.getLayoutParams();
+
+            if (i == 0)
+                p.setMargins(20, 0, 10, 0);
+            else if (i == binding.tlMain.getTabCount() - 1)
+                p.setMargins(10, 0, 20, 0);
+            else p.setMargins(10, 0, 10, 0);
+
+            tab.requestLayout();
+        }
     }
 
     @Override
