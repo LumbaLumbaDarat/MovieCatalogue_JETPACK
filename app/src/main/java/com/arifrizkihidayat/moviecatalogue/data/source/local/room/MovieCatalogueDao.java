@@ -22,6 +22,10 @@ public interface MovieCatalogueDao {
     LiveData<List<MovieEntity>> getMoviesCatalogues(String movieType);
 
     @Transaction
+    @Query("SELECT * FROM moviesCatalogues WHERE movieType = :movieType AND isFavorite = :isFavorite")
+    LiveData<List<MovieEntity>> getFavoriteMoviesCatalogues(String movieType, boolean isFavorite);
+
+    @Transaction
     @Query("SELECT * FROM moviesCatalogues WHERE movieId = :movieId")
     LiveData<MovieAndDetailEntity> getMoviesAndDetailCatalogues(int movieId);
 

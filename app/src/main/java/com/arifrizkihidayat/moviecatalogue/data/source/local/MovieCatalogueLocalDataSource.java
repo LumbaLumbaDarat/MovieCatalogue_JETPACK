@@ -29,6 +29,10 @@ public class MovieCatalogueLocalDataSource {
         return movieCatalogueDao.getMoviesCatalogues(movieType);
     }
 
+    public LiveData<List<MovieEntity>> getFavoriteMoviesCatalogues(String movieType) {
+        return movieCatalogueDao.getFavoriteMoviesCatalogues(movieType, true);
+    }
+
     public LiveData<MovieAndDetailEntity> getMovieDetailCatalogues(int movieId) {
         return movieCatalogueDao.getMoviesAndDetailCatalogues(movieId);
     }

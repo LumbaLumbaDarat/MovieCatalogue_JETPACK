@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.arifrizkihidayat.moviecatalogue.R;
+import com.arifrizkihidayat.moviecatalogue.data.source.local.entity.MovieEntity;
 import com.arifrizkihidayat.moviecatalogue.databinding.FragmentMoviesCatalogueBinding;
 import com.arifrizkihidayat.moviecatalogue.ui.activity.MovieDetailActivity;
 import com.arifrizkihidayat.moviecatalogue.ui.adapter.MoviesCatalogueAdapter;
@@ -23,6 +25,7 @@ import com.arifrizkihidayat.moviecatalogue.ui.viewmodel.MoviesCatalogueViewModel
 import com.arifrizkihidayat.moviecatalogue.ui.viewmodel.factory.ViewModelFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FAVORITE;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_MOVIES;
@@ -38,6 +41,9 @@ public class MoviesCatalogueFragment extends Fragment {
 
     private FragmentMoviesCatalogueBinding binding;
     private Intent intent;
+
+    private MoviesCatalogueViewModel moviesCatalogueViewModel;
+    private MoviesCatalogueAdapter moviesCatalogueAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,6 +83,12 @@ public class MoviesCatalogueFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(getActivity());
+        moviesCatalogueViewModel = new ViewModelProvider(this, viewModelFactory).
+                get(MoviesCatalogueViewModel.class);
+
+        moviesCatalogueAdapter = new MoviesCatalogueAdapter();
     }
 
     @Override
@@ -90,12 +102,7 @@ public class MoviesCatalogueFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ViewModelFactory viewModelFactory = ViewModelFactory.getInstance(getActivity());
-        MoviesCatalogueViewModel moviesCatalogueViewModel =
-                new ViewModelProvider(this, viewModelFactory).
-                        get(MoviesCatalogueViewModel.class);
 
-        MoviesCatalogueAdapter moviesCatalogueAdapter = new MoviesCatalogueAdapter();
         moviesCatalogueAdapter.setOnClickItemMovieCatalogue(movieEntity -> {
             intent = new Intent(getActivity(), MovieDetailActivity.class);
             intent.putExtra(MOVIES_MODEL, movieEntity.getMovieId());
@@ -104,67 +111,10 @@ public class MoviesCatalogueFragment extends Fragment {
             startActivity(intent);
         });
 
-        if (mParam1.equalsIgnoreCase(IS_FRAGMENT_MOVIES)) {
-            moviesCatalogueViewModel.getMoviesCatalogue().observe(getViewLifecycleOwner(),
-                    listResource ->
-            {
-                if (listResource != null) {
-                    switch (listResource.status) {
-                        case LOADING:
-                            binding.pbMoviesCatalogue.setVisibility(View.VISIBLE);
-                            break;
-                        case SUCCESS:
-                            moviesCatalogueAdapter.
-                                    setMovieEntityArrayList(new ArrayList<>(listResource.data));
-                            moviesCatalogueAdapter.notifyDataSetChanged();
-                            binding.pbMoviesCatalogue.setVisibility(View.GONE);
-                            break;
-                        case ERROR:
-                            Log.e("TAG", "onViewCreated: ERROR ".
-                                    concat(listResource.status.toString()).
-                                    concat(" - ").concat(listResource.message));
-                            binding.pbMoviesCatalogue.setVisibility(View.GONE);
-                            Toast.makeText(getActivity(), getResources().
-                                            getString(R.string.error_message_something_wrong).
-                                            concat("\n").
-                                            concat(listResource.status.toString()).
-                                            concat(" - ").concat(listResource.message),
-                                    Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                }
-            });
-        } else {
-            moviesCatalogueViewModel.getTvShowsCatalogue().observe(getViewLifecycleOwner(),
-                    listResource ->
-            {
-                if (listResource != null) {
-                    switch (listResource.status) {
-                        case LOADING:
-                            binding.pbMoviesCatalogue.setVisibility(View.VISIBLE);
-                            break;
-                        case SUCCESS:
-                            moviesCatalogueAdapter.
-                                    setMovieEntityArrayList(new ArrayList<>(listResource.data));
-                            moviesCatalogueAdapter.notifyDataSetChanged();
-                            binding.pbMoviesCatalogue.setVisibility(View.GONE);
-                            break;
-                        case ERROR:
-                            Log.e("TAG", "onViewCreated: ERROR ".
-                                    concat(listResource.status.toString()).
-                                    concat(" - ").concat(listResource.message));
-                            binding.pbMoviesCatalogue.setVisibility(View.GONE);
-                            Toast.makeText(getActivity(), getResources().
-                                            getString(R.string.error_message_something_wrong).
-                                            concat("\n").
-                                            concat(listResource.status.toString()).
-                                            concat(" - ").concat(listResource.message),
-                                    Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                }
-            });
-        }
+        Log.e("TAG", "onViewCreated: ".concat(mParam1).concat(" - ").concat(mParam2));
+
+        if (mParam2.equalsIgnoreCase(IS_FAVORITE)) loadFavoriteMoviesCatalogues();
+        else loadMoviesCatalogues();
 
         binding.rvMoviesCatalogues.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvMoviesCatalogues.setHasFixedSize(true);
@@ -175,5 +125,101 @@ public class MoviesCatalogueFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    private void loadMoviesCatalogues()
+    {
+        if (mParam1.equalsIgnoreCase(IS_FRAGMENT_MOVIES))
+        {
+            moviesCatalogueViewModel.getMoviesCatalogue().observe(getViewLifecycleOwner(),
+                    listResource ->
+                    {
+                        if (listResource != null)
+                        {
+                            switch (listResource.status)
+                            {
+                                case LOADING:
+                                    binding.pbMoviesCatalogue.setVisibility(View.VISIBLE);
+                                    break;
+                                case SUCCESS:
+                                    moviesCatalogueAdapter.
+                                            setMovieEntityArrayList(new ArrayList<>(listResource.data));
+                                    moviesCatalogueAdapter.notifyDataSetChanged();
+                                    binding.pbMoviesCatalogue.setVisibility(View.GONE);
+                                    break;
+                                case ERROR:
+                                    Log.e("TAG", "onViewCreated: ERROR ".
+                                            concat(listResource.status.toString()).
+                                            concat(" - ").concat(listResource.message));
+                                    binding.pbMoviesCatalogue.setVisibility(View.GONE);
+                                    Toast.makeText(getActivity(), getResources().
+                                                    getString(R.string.error_message_something_wrong).
+                                                    concat("\n").
+                                                    concat(listResource.status.toString()).
+                                                    concat(" - ").concat(listResource.message),
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                        }
+                    });
+        } else {
+            moviesCatalogueViewModel.getTvShowsCatalogue().observe(getViewLifecycleOwner(),
+                    listResource ->
+                    {
+                        if (listResource != null)
+                        {
+                            switch (listResource.status)
+                            {
+                                case LOADING:
+                                    binding.pbMoviesCatalogue.setVisibility(View.VISIBLE);
+                                    break;
+                                case SUCCESS:
+                                    moviesCatalogueAdapter.
+                                            setMovieEntityArrayList(new ArrayList<>(listResource.data));
+                                    moviesCatalogueAdapter.notifyDataSetChanged();
+                                    binding.pbMoviesCatalogue.setVisibility(View.GONE);
+                                    break;
+                                case ERROR:
+                                    Log.e("TAG", "onViewCreated: ERROR ".
+                                            concat(listResource.status.toString()).
+                                            concat(" - ").concat(listResource.message));
+                                    binding.pbMoviesCatalogue.setVisibility(View.GONE);
+                                    Toast.makeText(getActivity(), getResources().
+                                                    getString(R.string.error_message_something_wrong).
+                                                    concat("\n").
+                                                    concat(listResource.status.toString()).
+                                                    concat(" - ").concat(listResource.message),
+                                            Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void loadFavoriteMoviesCatalogues()
+    {
+        if (mParam1.equalsIgnoreCase(IS_FRAGMENT_MOVIES))
+        {
+            binding.pbMoviesCatalogue.setVisibility(View.VISIBLE);
+            moviesCatalogueViewModel.getFavoriteMoviesCatalogue().
+                    observe(getViewLifecycleOwner(), movieEntities ->
+            {
+                binding.pbMoviesCatalogue.setVisibility(View.GONE);
+                moviesCatalogueAdapter.
+                        setMovieEntityArrayList(new ArrayList<>(movieEntities));
+                moviesCatalogueAdapter.notifyDataSetChanged();
+            });
+        } else {
+            binding.pbMoviesCatalogue.setVisibility(View.VISIBLE);
+            moviesCatalogueViewModel.getFavoriteTvShowsCatalogue().
+                    observe(getViewLifecycleOwner(), movieEntities ->
+                    {
+                        binding.pbMoviesCatalogue.setVisibility(View.GONE);
+                        moviesCatalogueAdapter.
+                                setMovieEntityArrayList(new ArrayList<>(movieEntities));
+                        moviesCatalogueAdapter.notifyDataSetChanged();
+                    });
+        }
     }
 }

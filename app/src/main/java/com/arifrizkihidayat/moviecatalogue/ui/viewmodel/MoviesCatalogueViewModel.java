@@ -21,7 +21,15 @@ public class MoviesCatalogueViewModel extends ViewModel {
         return movieCatalogueRepository.getMoviesCatalogue();
     }
 
+    public LiveData<List<MovieEntity>> getFavoriteMoviesCatalogue() {
+        return movieCatalogueRepository.getFavoriteMoviesCatalogue();
+    }
+
     public LiveData<Resource<List<MovieEntity>>> getTvShowsCatalogue() {
         return movieCatalogueRepository.getTvShowsCatalogue();
+    }
+
+    public LiveData<List<MovieEntity>> getFavoriteTvShowsCatalogue() {
+        return movieCatalogueRepository.getFavoriteTvShowsCatalogue();
     }
 }

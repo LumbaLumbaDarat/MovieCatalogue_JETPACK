@@ -96,6 +96,11 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
     }
 
     @Override
+    public LiveData<List<MovieEntity>> getFavoriteMoviesCatalogue() {
+        return movieCatalogueLocalDataSource.getFavoriteMoviesCatalogues(IS_FRAGMENT_MOVIES);
+    }
+
+    @Override
     public LiveData<Resource<MovieAndDetailEntity>> getMovieDetailCatalogue(int movieId) {
         return new NetworkBoundResource<MovieAndDetailEntity, MovieDetailResponse>(appsExecutors) {
             @Override
@@ -175,6 +180,11 @@ public class MovieCatalogueRepository implements MovieCatalogueDataSource {
                 movieCatalogueLocalDataSource.insertMovies(movieEntityArrayList);
             }
         }.asLiveData();
+    }
+
+    @Override
+    public LiveData<List<MovieEntity>> getFavoriteTvShowsCatalogue() {
+        return movieCatalogueLocalDataSource.getFavoriteMoviesCatalogues(IS_FRAGMENT_TV_SHOW);
     }
 
     @Override
