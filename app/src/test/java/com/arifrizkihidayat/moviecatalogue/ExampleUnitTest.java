@@ -2,6 +2,8 @@ package com.arifrizkihidayat.moviecatalogue;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
+import androidx.paging.DataSource;
+import androidx.paging.PagedList;
 
 import com.arifrizkihidayat.moviecatalogue.data.FakeMovieCatalogueRepository;
 import com.arifrizkihidayat.moviecatalogue.data.source.local.MovieCatalogueLocalDataSource;
@@ -11,18 +13,19 @@ import com.arifrizkihidayat.moviecatalogue.data.source.remote.MovieCatalogueRemo
 import com.arifrizkihidayat.moviecatalogue.utils.AppsExecutors;
 import com.arifrizkihidayat.moviecatalogue.utils.DummyData;
 import com.arifrizkihidayat.moviecatalogue.utils.LiveDataTest;
+import com.arifrizkihidayat.moviecatalogue.utils.PagedListTest;
 import com.arifrizkihidayat.moviecatalogue.vo.Resource;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_MOVIES;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_TV_SHOW;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -32,51 +35,85 @@ public class ExampleUnitTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private final MovieCatalogueRemoteDataSource movieCatalogueRemoteDataSource =
-            Mockito.mock(MovieCatalogueRemoteDataSource.class);
+            mock(MovieCatalogueRemoteDataSource.class);
     private final MovieCatalogueLocalDataSource movieCatalogueLocalDataSource =
-            Mockito.mock(MovieCatalogueLocalDataSource.class);
-    private final AppsExecutors appsExecutors = Mockito.mock(AppsExecutors.class);
+            mock(MovieCatalogueLocalDataSource.class);
+    private final AppsExecutors appsExecutors = mock(AppsExecutors.class);
 
     private final FakeMovieCatalogueRepository fakeMovieCatalogueRepository =
             new FakeMovieCatalogueRepository(movieCatalogueRemoteDataSource,
                     movieCatalogueLocalDataSource, appsExecutors);
 
     private final ArrayList<MovieEntity> movieEntityArrayList = DummyData.dummyMovies();
+    private final ArrayList<MovieEntity> favoriteMovieEntityArrayList = DummyData.dummyFavoriteMovies();
     private final int movieId = movieEntityArrayList.get(0).getMovieId();
     private final MovieAndDetailEntity movieAndDetailEntity =
             DummyData.dummyDetailMovie(movieEntityArrayList.get(0));
 
     private final ArrayList<MovieEntity> tvShowsEntityArrayList = DummyData.dummyTvShows();
+    private final ArrayList<MovieEntity> favoriteTvShowsEntityArrayList = DummyData.dummyFavoriteTvShows();
     private final int tvShowId = tvShowsEntityArrayList.get(0).getMovieId();
     private final MovieAndDetailEntity tvShowAndDetailEntity =
             DummyData.dummyDetailMovie(tvShowsEntityArrayList.get(0));
 
     @Test
     public void getMoviesCatalogue() {
-        MutableLiveData<List<MovieEntity>> mutableLiveData = new MutableLiveData<>();
-        mutableLiveData.setValue(DummyData.dummyMovies());
+        DataSource.Factory<Integer, MovieEntity> dataSourceFactory = mock(DataSource.Factory.class);
         when(movieCatalogueLocalDataSource.getMoviesCatalogues(IS_FRAGMENT_MOVIES)).
-                thenReturn(mutableLiveData);
+                thenReturn(dataSourceFactory);
+        fakeMovieCatalogueRepository.getMoviesCatalogue();
 
-        Resource<List<MovieEntity>> resource = LiveDataTest.
-                getValue(fakeMovieCatalogueRepository.getMoviesCatalogue());
+        Resource<PagedList<MovieEntity>> pagedListResource =
+                Resource.success(PagedListTest.mockPagedList(DummyData.dummyMovies()));
+
         verify(movieCatalogueLocalDataSource).getMoviesCatalogues(IS_FRAGMENT_MOVIES);
-        assertNotNull(resource.data);
-        assertEquals(movieEntityArrayList.size(), resource.data.size());
+        assertNotNull(pagedListResource.data);
+        assertEquals(movieEntityArrayList.size(), pagedListResource.data.size());
+    }
+
+    @Test
+    public void getFavoriteMoviesCatalogue() {
+        DataSource.Factory<Integer, MovieEntity> dataSourceFactory = mock(DataSource.Factory.class);
+        when(movieCatalogueLocalDataSource.getFavoriteMoviesCatalogues(IS_FRAGMENT_MOVIES)).
+                thenReturn(dataSourceFactory);
+        fakeMovieCatalogueRepository.getFavoriteMoviesCatalogue();
+
+        Resource<PagedList<MovieEntity>> pagedListResource =
+                Resource.success(PagedListTest.mockPagedList(DummyData.dummyFavoriteMovies()));
+
+        verify(movieCatalogueLocalDataSource).getFavoriteMoviesCatalogues(IS_FRAGMENT_MOVIES);
+        assertNotNull(pagedListResource.data);
+        assertEquals(favoriteMovieEntityArrayList.size(), pagedListResource.data.size());
     }
 
     @Test
     public void getTvShowsCatalogue() {
-        MutableLiveData<List<MovieEntity>> mutableLiveData = new MutableLiveData<>();
-        mutableLiveData.setValue(DummyData.dummyTvShows());
+        DataSource.Factory<Integer, MovieEntity> dataSourceFactory = mock(DataSource.Factory.class);
         when(movieCatalogueLocalDataSource.getMoviesCatalogues(IS_FRAGMENT_TV_SHOW)).
-                thenReturn(mutableLiveData);
+                thenReturn(dataSourceFactory);
+        fakeMovieCatalogueRepository.getTvShowsCatalogue();
 
-        Resource<List<MovieEntity>> resource = LiveDataTest.
-                getValue(fakeMovieCatalogueRepository.getTvShowsCatalogue());
+        Resource<PagedList<MovieEntity>> pagedListResource =
+                Resource.success(PagedListTest.mockPagedList(DummyData.dummyTvShows()));
+
         verify(movieCatalogueLocalDataSource).getMoviesCatalogues(IS_FRAGMENT_TV_SHOW);
-        assertNotNull(resource.data);
-        assertEquals(tvShowsEntityArrayList.size(), resource.data.size());
+        assertNotNull(pagedListResource.data);
+        assertEquals(tvShowsEntityArrayList.size(), pagedListResource.data.size());
+    }
+
+    @Test
+    public void getFavoriteTvShowsCatalogue() {
+        DataSource.Factory<Integer, MovieEntity> dataSourceFactory = mock(DataSource.Factory.class);
+        when(movieCatalogueLocalDataSource.getFavoriteMoviesCatalogues(IS_FRAGMENT_TV_SHOW)).
+                thenReturn(dataSourceFactory);
+        fakeMovieCatalogueRepository.getFavoriteTvShowsCatalogue();
+
+        Resource<PagedList<MovieEntity>> pagedListResource =
+                Resource.success(PagedListTest.mockPagedList(DummyData.dummyFavoriteTvShows()));
+
+        verify(movieCatalogueLocalDataSource).getFavoriteMoviesCatalogues(IS_FRAGMENT_TV_SHOW);
+        assertNotNull(pagedListResource.data);
+        assertEquals(favoriteTvShowsEntityArrayList.size(), pagedListResource.data.size());
     }
 
     @Test
