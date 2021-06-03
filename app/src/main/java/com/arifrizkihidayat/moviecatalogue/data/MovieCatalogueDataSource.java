@@ -7,8 +7,6 @@ import com.arifrizkihidayat.moviecatalogue.data.source.local.entity.MovieAndDeta
 import com.arifrizkihidayat.moviecatalogue.data.source.local.entity.MovieEntity;
 import com.arifrizkihidayat.moviecatalogue.vo.Resource;
 
-import java.util.List;
-
 public interface MovieCatalogueDataSource {
     LiveData<Resource<PagedList<MovieEntity>>> getMoviesCatalogue();
     LiveData<Resource<PagedList<MovieEntity>>> getTvShowsCatalogue();

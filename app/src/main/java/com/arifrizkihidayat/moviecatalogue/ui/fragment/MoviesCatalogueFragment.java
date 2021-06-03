@@ -2,31 +2,25 @@ package com.arifrizkihidayat.moviecatalogue.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.arifrizkihidayat.moviecatalogue.R;
-import com.arifrizkihidayat.moviecatalogue.data.source.local.entity.MovieEntity;
 import com.arifrizkihidayat.moviecatalogue.databinding.FragmentMoviesCatalogueBinding;
 import com.arifrizkihidayat.moviecatalogue.ui.activity.MovieDetailActivity;
 import com.arifrizkihidayat.moviecatalogue.ui.adapter.MoviesCatalogueAdapter;
 import com.arifrizkihidayat.moviecatalogue.ui.viewmodel.MoviesCatalogueViewModel;
 import com.arifrizkihidayat.moviecatalogue.ui.viewmodel.factory.ViewModelFactory;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FAVORITE;
 import static com.arifrizkihidayat.moviecatalogue.utils.AppsConstants.IS_FRAGMENT_MOVIES;
