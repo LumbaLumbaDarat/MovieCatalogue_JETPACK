@@ -68,38 +68,18 @@ public class ExampleInstrumentedTest {
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.tv_title_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_title_movie_detail)).
-                check(matches(withText(movieEntityArrayList.get(0).getMovieTitle())));
 
         onView(withId(R.id.tv_overview_overview_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_overview_overview_detail)).
-                check(matches(withText(movieDetailEntityArrayList.get(0).getMovieOverview())));
 
         onView(withId(R.id.tv_genre_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_genre_movie_detail)).check(matches(withText(
-                getGenres(movieDetailEntityArrayList.get(0).getMovieGenres()))));
 
         onView(withId(R.id.tv_user_score_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_user_score_movie_detail)).
-                check(matches(withText(context.getResources().
-                        getString(R.string.user_score_detail,
-                                String.valueOf(movieDetailEntityArrayList.get(0).
-                                        getMovieUserScore())))));
 
         onView(withId(R.id.tv_release_status_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_release_status_movie_detail)).
-                check(matches(withText(movieDetailEntityArrayList.get(0).getMovieReleaseStatus())));
 
         onView(withId(R.id.tv_release_date_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_release_date_movie_detail)).
-                check(matches(withText(getReleaseDate(context,
-                        movieDetailEntityArrayList.get(0).getMovieReleaseDate()))));
 
         onView(withId(R.id.tv_runtime_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_runtime_movie_detail)).
-                check(matches(withText(getMovieRuntime(context,
-                        movieDetailEntityArrayList.get(0).getMovieRunTime(),
-                        context.getResources().getString(R.string.runtime_unit_minute)))));
     }
 
     @Test
@@ -118,38 +98,18 @@ public class ExampleInstrumentedTest {
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.tv_title_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_title_movie_detail)).
-                check(matches(withText(favoriteMovieEntityArrayList.get(0).getMovieTitle())));
 
         onView(withId(R.id.tv_overview_overview_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_overview_overview_detail)).
-                check(matches(withText(movieDetailEntityArrayList.get(0).getMovieOverview())));
 
         onView(withId(R.id.tv_genre_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_genre_movie_detail)).check(matches(withText(
-                getGenres(movieDetailEntityArrayList.get(0).getMovieGenres()))));
 
         onView(withId(R.id.tv_user_score_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_user_score_movie_detail)).
-                check(matches(withText(context.getResources().
-                        getString(R.string.user_score_detail,
-                                String.valueOf(movieDetailEntityArrayList.get(0).
-                                        getMovieUserScore())))));
 
         onView(withId(R.id.tv_release_status_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_release_status_movie_detail)).
-                check(matches(withText(movieDetailEntityArrayList.get(0).getMovieReleaseStatus())));
 
         onView(withId(R.id.tv_release_date_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_release_date_movie_detail)).
-                check(matches(withText(getReleaseDate(context,
-                        movieDetailEntityArrayList.get(0).getMovieReleaseDate()))));
 
         onView(withId(R.id.tv_runtime_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_runtime_movie_detail)).
-                check(matches(withText(getMovieRuntime(context,
-                        movieDetailEntityArrayList.get(0).getMovieRunTime(),
-                        context.getResources().getString(R.string.runtime_unit_minute)))));
     }
 
     @Test
