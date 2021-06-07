@@ -35,7 +35,6 @@ public class ExampleInstrumentedTest {
 
     private final ArrayList<MovieEntity> movieEntityArrayList = DummyData.dummyMovies();
     private final ArrayList<MovieEntity> favoriteMovieEntityArrayList = DummyData.dummyFavoriteMovies();
-    private final ArrayList<MovieDetailEntity> movieDetailEntityArrayList = DummyData.dummyDetailMovies();
 
     private final ArrayList<MovieEntity> tvShowEntityArrayList = DummyData.dummyTvShows();
     private final ArrayList<MovieEntity> favoriteTvShowEntityArrayList = DummyData.dummyFavoriteTvShows();
@@ -175,8 +174,6 @@ public class ExampleInstrumentedTest {
     @Test
     public void loadDetailFavoriteTvShows() {
         onView(withText("Tv Shows")).perform(click());
-        onView(withId(R.id.rv_movies_catalogues)).perform(RecyclerViewActions.
-                scrollToPosition(0));
         onView(withId(R.id.rv_movies_catalogues)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
