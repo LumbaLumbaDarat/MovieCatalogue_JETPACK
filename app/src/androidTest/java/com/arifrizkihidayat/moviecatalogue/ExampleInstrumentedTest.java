@@ -38,7 +38,6 @@ public class ExampleInstrumentedTest {
 
     private final ArrayList<MovieEntity> tvShowEntityArrayList = DummyData.dummyTvShows();
     private final ArrayList<MovieEntity> favoriteTvShowEntityArrayList = DummyData.dummyFavoriteTvShows();
-    private final ArrayList<MovieDetailEntity> tvShowDetailEntityArrayList = DummyData.dummyDetailMovies();
 
     @Before
     public void setup() {
@@ -121,45 +120,24 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void loadDetailTvShows() {
-        onView(withText("Tv Shows")).perform(click());
         onView(withId(R.id.rv_movies_catalogues)).perform(RecyclerViewActions.
                 scrollToPosition(0));
         onView(withId(R.id.rv_movies_catalogues)).
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.tv_title_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_title_movie_detail)).
-                check(matches(withText(tvShowEntityArrayList.get(0).getMovieTitle())));
 
         onView(withId(R.id.tv_overview_overview_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_overview_overview_detail)).
-                check(matches(withText(tvShowDetailEntityArrayList.get(5).getMovieOverview())));
 
         onView(withId(R.id.tv_genre_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_genre_movie_detail)).check(matches(withText(
-                getGenres(tvShowDetailEntityArrayList.get(5).getMovieGenres()))));
 
         onView(withId(R.id.tv_user_score_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_user_score_movie_detail)).
-                check(matches(withText(context.getResources().
-                        getString(R.string.user_score_detail,
-                                String.valueOf(tvShowDetailEntityArrayList.get(5).
-                                        getMovieUserScore())))));
 
         onView(withId(R.id.tv_release_status_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_release_status_movie_detail)).
-                check(matches(withText(tvShowDetailEntityArrayList.get(5).getMovieReleaseStatus())));
 
         onView(withId(R.id.tv_release_date_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_release_date_movie_detail)).
-                check(matches(withText(getReleaseDate(context,
-                        tvShowDetailEntityArrayList.get(5).getMovieReleaseDate()))));
 
         onView(withId(R.id.tv_runtime_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_runtime_movie_detail)).
-                check(matches(withText(getMovieRuntime(context,
-                        tvShowDetailEntityArrayList.get(5).getMovieRunTime(),
-                        context.getResources().getString(R.string.runtime_unit_episode)))));
     }
 
     @Test
@@ -178,37 +156,17 @@ public class ExampleInstrumentedTest {
                 perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         onView(withId(R.id.tv_title_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_title_movie_detail)).
-                check(matches(withText(favoriteTvShowEntityArrayList.get(0).getMovieTitle())));
 
         onView(withId(R.id.tv_overview_overview_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_overview_overview_detail)).
-                check(matches(withText(tvShowDetailEntityArrayList.get(5).getMovieOverview())));
 
         onView(withId(R.id.tv_genre_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_genre_movie_detail)).check(matches(withText(
-                getGenres(tvShowDetailEntityArrayList.get(5).getMovieGenres()))));
 
         onView(withId(R.id.tv_user_score_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_user_score_movie_detail)).
-                check(matches(withText(context.getResources().
-                        getString(R.string.user_score_detail,
-                                String.valueOf(tvShowDetailEntityArrayList.get(5).
-                                        getMovieUserScore())))));
 
         onView(withId(R.id.tv_release_status_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_release_status_movie_detail)).
-                check(matches(withText(tvShowDetailEntityArrayList.get(5).getMovieReleaseStatus())));
 
         onView(withId(R.id.tv_release_date_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_release_date_movie_detail)).
-                check(matches(withText(getReleaseDate(context,
-                        tvShowDetailEntityArrayList.get(5).getMovieReleaseDate()))));
 
         onView(withId(R.id.tv_runtime_movie_detail)).check(matches(isDisplayed()));
-        onView(withId(R.id.tv_runtime_movie_detail)).
-                check(matches(withText(getMovieRuntime(context,
-                        tvShowDetailEntityArrayList.get(5).getMovieRunTime(),
-                        context.getResources().getString(R.string.runtime_unit_episode)))));
     }
 }

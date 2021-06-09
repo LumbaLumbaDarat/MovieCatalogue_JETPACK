@@ -55,6 +55,7 @@ public class MovieDetailViewModelTest {
         resourceMutableLiveData.setValue(dummyDetailMovie);
 
         when(movieCatalogueRepository.getMovieDetailCatalogue(movieId)).thenReturn(resourceMutableLiveData);
+        verify(movieCatalogueRepository).getMovieDetailCatalogue(movieId);
 
         movieDetailViewModel.getMovieDetail(movieId).observeForever(observer);
         verify(observer).onChanged(dummyDetailMovie);
@@ -69,6 +70,7 @@ public class MovieDetailViewModelTest {
         resourceMutableLiveData.setValue(dummyDetailTvShow);
 
         when(movieCatalogueRepository.getTvShowDetailCatalogue(tvShowId)).thenReturn(resourceMutableLiveData);
+        verify(movieCatalogueRepository).getTvShowDetailCatalogue(tvShowId);
 
         movieDetailViewModel.getTvShowDetail(tvShowId).observeForever(observer);
         verify(observer).onChanged(dummyDetailTvShow);
